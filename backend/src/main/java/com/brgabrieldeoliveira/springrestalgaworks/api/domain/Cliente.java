@@ -1,5 +1,7 @@
 package com.brgabrieldeoliveira.springrestalgaworks.api.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +24,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "CLIENTES")
-public class Cliente {
+public class Cliente implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@EqualsAndHashCode.Include
 	@Id
