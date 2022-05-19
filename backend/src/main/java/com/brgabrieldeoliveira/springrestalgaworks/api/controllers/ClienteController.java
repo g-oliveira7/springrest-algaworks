@@ -2,6 +2,8 @@ package com.brgabrieldeoliveira.springrestalgaworks.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +37,13 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
+	public ResponseEntity<Cliente> salvar(@RequestBody @Valid Cliente cliente) {
 		return clienteService.salvar(cliente).map(c -> ResponseEntity.status(HttpStatus.CREATED).body(cliente))
 				.orElse(ResponseEntity.badRequest().build());
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody Cliente dadosParaAtualizar) {
+	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody @Valid Cliente dadosParaAtualizar) {
 		return clienteService.atualizar(id, dadosParaAtualizar).map(c -> ResponseEntity.ok(c))
 				.orElse(ResponseEntity.notFound().build());
 	}
