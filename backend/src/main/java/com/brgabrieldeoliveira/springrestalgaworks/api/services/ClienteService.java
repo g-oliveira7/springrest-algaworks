@@ -25,19 +25,11 @@ public class ClienteService {
 
 	@Transactional(readOnly = true)
 	public Optional<Cliente> buscarPorId(Long id) {
-		if (id == null) {
-			return null;
-		}
-		
 		return clienteRepository.findById(id);
 	}
 	
 	@Transactional
 	public Optional<Cliente> salvar(Cliente cliente) {
-		if (cliente == null) {
-			return null;
-		}
-		
 		boolean emailEmUso = clienteRepository.findByEmail(cliente.getEmail())
 				.stream()
 				.anyMatch(algumClienteRetornado -> !algumClienteRetornado.equals(cliente));
