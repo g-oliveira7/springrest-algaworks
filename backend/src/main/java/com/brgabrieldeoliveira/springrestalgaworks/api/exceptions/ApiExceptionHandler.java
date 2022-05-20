@@ -12,8 +12,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.models.StandardSimpleError;
 import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.models.StandardValidationError;
 import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.models.ValidationError;
+import com.brgabrieldeoliveira.springrestalgaworks.api.services.exceptions.DomainException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -38,4 +40,15 @@ public class ApiExceptionHandler {
 		return ResponseEntity.badRequest().body(error);
 	}
 	
+	@ExceptionHandler(DomainException.class)
+	public ResponseEntity<StandardSimpleError> handleDomainException(DomainException e, HttpServletRequest req) {
+		final StandardSimpleError error = new StandardSimpleError(
+				LocalDateTime.now(), 
+				HttpStatus.BAD_REQUEST.value(),
+				"Erro de domínio",
+				req.getRequestURI(),
+				e.getMessage());
+		
+		return ResponseEntity.badRequest().body(error);
+	}
 }

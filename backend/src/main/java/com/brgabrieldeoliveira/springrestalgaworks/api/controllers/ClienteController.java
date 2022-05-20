@@ -33,18 +33,22 @@ public class ClienteController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
-		return clienteService.buscarPorId(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+		return clienteService.buscarPorId(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 
 	@PostMapping
 	public ResponseEntity<Cliente> salvar(@RequestBody @Valid Cliente cliente) {
-		return clienteService.salvar(cliente).map(c -> ResponseEntity.status(HttpStatus.CREATED).body(cliente))
+		return clienteService.salvar(cliente)
+				.map(c -> ResponseEntity.status(HttpStatus.CREATED).body(cliente))
 				.orElse(ResponseEntity.badRequest().build());
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody @Valid Cliente dadosParaAtualizar) {
-		return clienteService.atualizar(id, dadosParaAtualizar).map(c -> ResponseEntity.ok(c))
+		return clienteService.atualizar(id, dadosParaAtualizar)
+				.map(c -> ResponseEntity.ok(c))
 				.orElse(ResponseEntity.notFound().build());
 	}
 
