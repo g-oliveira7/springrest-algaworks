@@ -12,18 +12,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import com.brgabrieldeoliveira.springrestalgaworks.api.domain.enums.StatusEntrega;
+import com.brgabrieldeoliveira.springrestalgaworks.api.services.ValidationGroups;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "ENTREGAS")
 public class Entrega implements Serializable {
@@ -45,9 +51,14 @@ public class Entrega implements Serializable {
 	private LocalDateTime dataFinalizacao;
 
 	@Embedded
+	@Valid
+	@NotNull(message = "Campo obrigatório")
 	private Destinatario destinatario;
 	
 	@ManyToOne
+	@Valid
+	@NotNull(message = "Campo obrigatório")
+	@ConvertGroup(from = Default.class, to = ValidationGroups.ClienteId.class)
 	private Cliente cliente;
 
 	@Column(nullable = false, length = 20)

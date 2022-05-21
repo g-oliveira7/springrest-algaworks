@@ -10,8 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.brgabrieldeoliveira.springrestalgaworks.api.services.ValidationGroups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +33,7 @@ public class Cliente implements Serializable {
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull(message = "Campo obrigatório", groups = ValidationGroups.ClienteId.class)
 	private Long id;
 	
 	@Column(length = 60, nullable = false)

@@ -1,6 +1,8 @@
 package com.brgabrieldeoliveira.springrestalgaworks.api.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,8 +10,8 @@ import org.springframework.stereotype.Service;
 import com.brgabrieldeoliveira.springrestalgaworks.api.domain.Cliente;
 import com.brgabrieldeoliveira.springrestalgaworks.api.domain.Entrega;
 import com.brgabrieldeoliveira.springrestalgaworks.api.domain.enums.StatusEntrega;
+import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.DomainException;
 import com.brgabrieldeoliveira.springrestalgaworks.api.repositories.EntregaRepository;
-import com.brgabrieldeoliveira.springrestalgaworks.api.services.exceptions.DomainException;
 
 @Service
 public class EntregaService {
@@ -31,4 +33,11 @@ public class EntregaService {
 		return entregaRepository.save(entrega);
 	}
 	
+	public Optional<Entrega> buscarPorId(Long id) {
+		return entregaRepository.findById(id);
+	}
+	
+	public List<Entrega> listarTodos() {
+		return entregaRepository.findAll();
+	}
 }

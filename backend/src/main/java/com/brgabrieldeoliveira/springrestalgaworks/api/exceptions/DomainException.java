@@ -1,4 +1,4 @@
-package com.brgabrieldeoliveira.springrestalgaworks.api.services.exceptions;
+package com.brgabrieldeoliveira.springrestalgaworks.api.exceptions;
 
 public class DomainException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

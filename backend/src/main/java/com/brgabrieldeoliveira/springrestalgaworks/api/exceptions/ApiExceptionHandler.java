@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.models.StandardSimpleError;
 import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.models.StandardValidationError;
 import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.models.ValidationError;
-import com.brgabrieldeoliveira.springrestalgaworks.api.services.exceptions.DomainException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {

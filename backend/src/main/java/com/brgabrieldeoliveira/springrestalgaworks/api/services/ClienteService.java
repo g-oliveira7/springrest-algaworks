@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.brgabrieldeoliveira.springrestalgaworks.api.domain.Cliente;
+import com.brgabrieldeoliveira.springrestalgaworks.api.exceptions.DomainException;
 import com.brgabrieldeoliveira.springrestalgaworks.api.repositories.ClienteRepository;
-import com.brgabrieldeoliveira.springrestalgaworks.api.services.exceptions.DomainException;
 
 @Service
 public class ClienteService {
