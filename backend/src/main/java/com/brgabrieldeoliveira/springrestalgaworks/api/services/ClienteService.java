@@ -46,7 +46,7 @@ public class ClienteService {
 		Cliente clienteParaAtualizar = buscarPorId(id).orElse(null); 
 		
 		if (clienteParaAtualizar != null) {			
-			return Optional.of(atualizarCliente(clienteParaAtualizar, dadosParaAtualizar));
+			return Optional.of(atualizarCliente(dadosParaAtualizar, clienteParaAtualizar));
 		}
 		return null;
 	}
@@ -56,7 +56,7 @@ public class ClienteService {
 		clienteRepository.deleteById(id);		
 	}
 	
-	private Cliente atualizarCliente(Cliente clienteParaAtualizar, Cliente dadosParaAtualizar) {
+	private Cliente atualizarCliente(Cliente dadosParaAtualizar, Cliente clienteParaAtualizar) {
 		final String nome = dadosParaAtualizar.getNome();
 		final String email = dadosParaAtualizar.getEmail();
 		final String telefone = dadosParaAtualizar.getTelefone();

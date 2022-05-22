@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brgabrieldeoliveira.springrestalgaworks.api.domain.Entrega;
+import com.brgabrieldeoliveira.springrestalgaworks.api.dtos.ApiMappers;
+import com.brgabrieldeoliveira.springrestalgaworks.api.dtos.EntregaInputDto;
+import com.brgabrieldeoliveira.springrestalgaworks.api.dtos.EntregaOutputDto;
 import com.brgabrieldeoliveira.springrestalgaworks.api.services.EntregaService;
 
 @RestController
@@ -23,23 +26,28 @@ public class EntregaController {
 	
 	@Autowired
 	private EntregaService entregaService;
+	
+	@Autowired
+	private ApiMappers apiMapper;
 
 	@GetMapping
-	public ResponseEntity<List<Entrega>> listarTodos() { 
+	public ResponseEntity<List<EntregaOutputDto>> listarTodos() { 
 		List<Entrega> lista = entregaService.listarTodos();
-		return ResponseEntity.ok(lista);
+		return ResponseEntity.ok(apiMapper.toOutputDtoList(lista));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Entrega> solicitar(@RequestBody @Valid Entrega entrega) {
-		Entrega entregaSolicitada = entregaService.solicitar(entrega);
+	public ResponseEntity<EntregaOutputDto> solicitar(@RequestBody @Valid EntregaInputDto entregaInputDto) {
+		Entrega entrega = apiMapper.toEntity(entregaInputDto);
+		entrega  = entregaService.solicitar(entrega);
+		EntregaOutputDto entregaSolicitada = apiMapper.toOutputDto(entrega);
 		return ResponseEntity.status(HttpStatus.CREATED).body(entregaSolicitada);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Entrega> buscarPorId(@PathVariable Long id) {
+	public ResponseEntity<EntregaOutputDto> buscarPorId(@PathVariable Long id) {
 		return entregaService.buscarPorId(id)
-				.map(ResponseEntity::ok)
+				.map(e -> ResponseEntity.ok(apiMapper.toOutputDto(e)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	

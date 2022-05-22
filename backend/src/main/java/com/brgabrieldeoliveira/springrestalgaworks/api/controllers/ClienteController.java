@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brgabrieldeoliveira.springrestalgaworks.api.domain.Cliente;
+import com.brgabrieldeoliveira.springrestalgaworks.api.dtos.ApiMappers;
+import com.brgabrieldeoliveira.springrestalgaworks.api.dtos.ClienteInputDto;
 import com.brgabrieldeoliveira.springrestalgaworks.api.services.ClienteService;
 
 @RestController
@@ -25,6 +27,9 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private ApiMappers apiMapper;
 
 	@GetMapping
 	public List<Cliente> listarTodos() {
@@ -39,15 +44,19 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Cliente> salvar(@RequestBody @Valid Cliente cliente) {
-		return clienteService.salvar(cliente)
-				.map(c -> ResponseEntity.status(HttpStatus.CREATED).body(cliente))
+	public ResponseEntity<Cliente> salvar(@RequestBody @Valid ClienteInputDto clienteInputDto) {
+		Cliente novoCliente = apiMapper.toEntity(clienteInputDto);
+		
+		return clienteService.salvar(novoCliente)
+				.map(c -> ResponseEntity.status(HttpStatus.CREATED).body(c))
 				.orElse(ResponseEntity.badRequest().build());
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody @Valid Cliente dadosParaAtualizar) {
-		return clienteService.atualizar(id, dadosParaAtualizar)
+	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody @Valid ClienteInputDto dadosParaAtualizar) {
+		Cliente clienteDados = apiMapper.toEntity(dadosParaAtualizar);
+		
+		return clienteService.atualizar(id, clienteDados)
 				.map(c -> ResponseEntity.ok(c))
 				.orElse(ResponseEntity.notFound().build());
 	}
