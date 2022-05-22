@@ -33,7 +33,7 @@ public class EntregaController {
 	@GetMapping
 	public ResponseEntity<List<EntregaOutputDto>> listarTodos() { 
 		List<Entrega> lista = entregaService.listarTodos();
-		return ResponseEntity.ok(apiMapper.toOutputDtoList(lista));
+		return ResponseEntity.ok(apiMapper.toOutputEntregaList(lista));
 	}
 	
 	@PostMapping

@@ -50,4 +50,17 @@ public class ApiExceptionHandler {
 		
 		return ResponseEntity.badRequest().body(error);
 	}
+	
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	public ResponseEntity<StandardSimpleError> handleNotFoundException(EntidadeNaoEncontradaException e, HttpServletRequest req) {
+		final StandardSimpleError error = new StandardSimpleError(
+				LocalDateTime.now(), 
+				HttpStatus.NOT_FOUND.value(),
+				"Entidade não encontrada",
+				req.getRequestURI(),
+				e.getMessage());
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+	
 }
