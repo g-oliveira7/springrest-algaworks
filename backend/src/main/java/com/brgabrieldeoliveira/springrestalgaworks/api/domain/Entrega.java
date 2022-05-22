@@ -2,7 +2,7 @@ package com.brgabrieldeoliveira.springrestalgaworks.api.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -45,10 +45,10 @@ public class Entrega implements Serializable {
 	private BigDecimal taxa;
 
 	@Column(nullable = false, length = 30)
-	private LocalDateTime dataPedido;
+	private OffsetDateTime dataPedido;
 
 	@Column(length = 30)
-	private LocalDateTime dataFinalizacao;
+	private OffsetDateTime dataFinalizacao;
 
 	@Embedded
 	@Valid
